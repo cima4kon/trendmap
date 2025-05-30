@@ -21,11 +21,11 @@ jobs:
         with:
           python-version: '3.11'
 
-      - name: Install dependencies
-        run: pip install -r requirements.txt || true
-
       - name: Run rankbot.py
-        run: python rankbot.py
+        run: |
+          echo "🚀 rankbot.py 시작"
+          python rankbot.py
+          echo "✅ rankbot.py 완료"
 
       - name: Commit changes
         run: |
