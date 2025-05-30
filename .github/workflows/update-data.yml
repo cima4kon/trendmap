@@ -1,0 +1,33 @@
+name: Daily Update JSON
+
+on:
+  schedule:
+    - cron: '0 16 * * *'  # 매일 한국시간 새벽 1시에 실행
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v3
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.11'
+
+      - name: Install dependencies
+        run: pip install -r requirements.txt || true
+
+      - name: Run rankbot.py
+        run: python rankbot.py
+
+      - name: Commit changes
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add data/
+          git commit -m "📊 자동 생성된 JSON 업데이트 ($(date '+%Y-%m-%d'))" || echo "No changes"
+          git push

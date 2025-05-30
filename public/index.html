@@ -32,7 +32,7 @@
 
   <script>
     const today = new Date().toISOString().split('T')[0];
-    fetch(`../data/${today}.json`)
+    fetch(`/data/${today}.json`)
       .then(response => response.json())
       .then(data => {
         const tbody = document.querySelector("#rankTable tbody");
